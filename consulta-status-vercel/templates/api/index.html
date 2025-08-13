@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Consulta de Status</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <style>
+        body { font-family: Inter, Roboto, Arial, sans-serif; max-width: 760px; margin: 24px auto; padding: 0 16px; color: #111; }
+        h2 { margin-bottom: 8px; }
+        form { display:flex; gap:8px; margin-bottom: 12px; }
+        input[type=text]{ flex:1; padding:10px; border-radius:8px; border:1px solid #d6dbe6; font-size:15px }
+        button{ padding:10px 14px; border-radius:8px; border:none; background:#2563eb; color:#fff; font-weight:600; cursor:pointer }
+        .card{ background:#fff; border-radius:10px; padding:14px; box-shadow:0 6px 18px rgba(13,38,76,0.06); margin-top:10px }
+        .label{ font-size:13px; color:#666; margin-bottom:6px }
+        .value{ font-weight:700; margin-bottom:8px }
+        .status { padding:6px 10px; border-radius:6px; color:#fff; font-weight:700; display:inline-block; }
+        .notfound{ color:#b91c1c; font-weight:700 }
+        footer{ margin-top:18px; color:#666; font-size:13px }
+    </style>
+</head>
+<body>
+    <h2>📋 Consulta de Status</h2>
+    <p>Digite o <strong>Nome Completo</strong> exatamente como está na planilha e clique em Buscar.</p>
+    <form method="get" action="/">
+        <input type="text" name="nome" placeholder="Ex: Thiago da Silva Ribeiro" required>
+        <button type="submit">Buscar</button>
+    </form>
+
+    {% if resultado %}
+        {% for r in resultado %}
+            <div class="card">
+                <div class="label">Nome:</div>
+                <div class="value">{{ r['Nome Completo'] }}</div>
+
+                <div class="label">Service de atuação:</div>
+                <div class="value">{{ r['Service de atuação'] }}</div>
+
+                <div class="label">Status:</div>
+                <div class="status" style="background-color:{{ r['cor'] }};">{{ r['STATUS DA ANALISE'] }}</div>
+            </div>
+        {% endfor %}
+    {% elif resultado is not none %}
+        <p class="notfound">❌ Nenhum registro encontrado.</p>
+    {% endif %}
+
+    <footer>
+        <p>Planilha: <strong>Análise de Risco - MELI</strong></p>
+    </footer>
+</body>
+</html>
